@@ -14,8 +14,13 @@
 
   <dependencies>
     <dependency>
-      <groupId>lexAccess2011lite</groupId>
-      <artifactId>lexAccess2011lite</artifactId>
+      <groupId>lexAccess2011dist</groupId>
+      <artifactId>lexAccess2011dist</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>lvg2011api</groupId>
+      <artifactId>lvg2011api</artifactId>
       <version>1.0.0</version>
     </dependency>
     <dependency>

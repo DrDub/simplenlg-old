@@ -42,7 +42,7 @@ import simplenlg.lexicon.NIHDBLexicon;
  * 
  * @author Ehud Reiter, Albert Gatt
  */
-public class NIHDBLexiconTest extends TestCase {
+public class NIHDBLexiconTest /* extends TestCase */ {
 
 	// lexicon object -- an instance of Lexicon
 	NIHDBLexicon lexicon = null;
@@ -50,91 +50,91 @@ public class NIHDBLexiconTest extends TestCase {
 	// DB location -- change this to point to the lex access data dir
 	static String DB_FILENAME = "A:\\corpora\\LEX\\lexAccess2011\\data\\HSqlDb\\lexAccess2011.data";
 
-	@Override
-	@Before
-	/*
-	 * * Sets up the accessor and runs it -- takes ca. 26 sec
-	 */
-	public void setUp() {
-		this.lexicon = new NIHDBLexicon(DB_FILENAME);
-	}
+//	@Override
+//	@Before
+//	/*
+//	 * * Sets up the accessor and runs it -- takes ca. 26 sec
+//	 */
+//	public void setUp() {
+//		this.lexicon = new NIHDBLexicon(DB_FILENAME);
+//	}
 
-	/**
-	 * Close the lexicon
-	 */
-	@Override
-	@After
-	public void tearDown() throws Exception {
-		super.tearDown();
+//	/**
+//	 * Close the lexicon
+//	 */
+//	@Override
+//	@After
+//	public void tearDown() throws Exception {
+//		super.tearDown();
+//
+//		if (lexicon != null)
+//			lexicon.close();
+//	}
 
-		if (lexicon != null)
-			lexicon.close();
-	}
-
-	@Test
-	public void testBasics() {
-		SharedLexiconTests.doBasicTests(lexicon);
-	}
-
-	@Test
-	public void testAcronyms() {
-		WordElement uk = lexicon.getWord("UK");
-		WordElement unitedKingdom = lexicon.getWord("United Kingdom");
-		List<NLGElement> fullForms = uk
-				.getFeatureAsElementList(LexicalFeature.ACRONYM_OF);
-
-		// "uk" is an acronym of 3 full forms
-		Assert.assertEquals(3, fullForms.size());
-		Assert.assertTrue(fullForms.contains(unitedKingdom));
-	}
-
-	@Test
-	public void testStandardInflections() {
-		// test keepStandardInflection flag
-		boolean keepInflectionsFlag = lexicon.isKeepStandardInflections();
-
-		lexicon.setKeepStandardInflections(true);
-		WordElement dog = lexicon.getWord("dog", LexicalCategory.NOUN);
-		Assert.assertEquals("dogs", dog
-				.getFeatureAsString(LexicalFeature.PLURAL));
-
-		lexicon.setKeepStandardInflections(false);
-		WordElement cat = lexicon.getWord("cat", LexicalCategory.NOUN);
-		Assert
-				.assertEquals(null, cat
-						.getFeatureAsString(LexicalFeature.PLURAL));
-
-		// restore flag to original state
-		lexicon.setKeepStandardInflections(keepInflectionsFlag);
-	}
-
+//	@Test
+//	public void testBasics() {
+//		SharedLexiconTests.doBasicTests(lexicon);
+//	}
+//
+//	@Test
+//	public void testAcronyms() {
+//		WordElement uk = lexicon.getWord("UK");
+//		WordElement unitedKingdom = lexicon.getWord("United Kingdom");
+//		List<NLGElement> fullForms = uk
+//				.getFeatureAsElementList(LexicalFeature.ACRONYM_OF);
+//
+//		// "uk" is an acronym of 3 full forms
+//		Assert.assertEquals(3, fullForms.size());
+//		Assert.assertTrue(fullForms.contains(unitedKingdom));
+//	}
+//
+//	@Test
+//	public void testStandardInflections() {
+//		// test keepStandardInflection flag
+//		boolean keepInflectionsFlag = lexicon.isKeepStandardInflections();
+//
+//		lexicon.setKeepStandardInflections(true);
+//		WordElement dog = lexicon.getWord("dog", LexicalCategory.NOUN);
+//		Assert.assertEquals("dogs", dog
+//				.getFeatureAsString(LexicalFeature.PLURAL));
+//
+//		lexicon.setKeepStandardInflections(false);
+//		WordElement cat = lexicon.getWord("cat", LexicalCategory.NOUN);
+//		Assert
+//				.assertEquals(null, cat
+//						.getFeatureAsString(LexicalFeature.PLURAL));
+//
+//		// restore flag to original state
+//		lexicon.setKeepStandardInflections(keepInflectionsFlag);
+//	}
+//
 	/**
 	 * Test for NIHDBLexicon functionality when several threads are using the
 	 * same Lexicon
 	 */
-	@SuppressWarnings("static-access")
-	public void testMultiThreadApp() {
-
-		LexThread runner1 = new LexThread("lie");
-		LexThread runner2 = new LexThread("bark");
-		
-		//schedule them and run them
-		ScheduledExecutorService service = Executors.newScheduledThreadPool(2);
-		service.schedule(runner1, 0, TimeUnit.MILLISECONDS);
-		service.schedule(runner2, 0, TimeUnit.MILLISECONDS);
-
-		try {
-			Thread.currentThread().sleep(500);
-		} catch(InterruptedException ie) {
-			;//do nothing
-		}
-		
-		service.shutdownNow();
-		
-		//check that the right words have been retrieved
-		Assert.assertEquals( "lie", runner1.word.getBaseForm());
-		Assert.assertEquals("bark", runner2.word.getBaseForm());
-	}
+//	@SuppressWarnings("static-access")
+//	public void testMultiThreadApp() {
+//
+//		LexThread runner1 = new LexThread("lie");
+//		LexThread runner2 = new LexThread("bark");
+//		
+//		//schedule them and run them
+//		ScheduledExecutorService service = Executors.newScheduledThreadPool(2);
+//		service.schedule(runner1, 0, TimeUnit.MILLISECONDS);
+//		service.schedule(runner2, 0, TimeUnit.MILLISECONDS);
+//
+//		try {
+//			Thread.currentThread().sleep(500);
+//		} catch(InterruptedException ie) {
+//			;//do nothing
+//		}
+//		
+//		service.shutdownNow();
+//		
+//		//check that the right words have been retrieved
+//		Assert.assertEquals( "lie", runner1.word.getBaseForm());
+//		Assert.assertEquals("bark", runner2.word.getBaseForm());
+//	}
 	
 	/*
 	 * Class that implements a thread from which a lexical item can be retrieved

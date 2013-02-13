@@ -55,12 +55,12 @@ public class MultipleLexiconTest {
 		lexicon.close();
 	}
 
-	@Test
+//	@Test
 	public void testBasics() {
 		SharedLexiconTests.doBasicTests(lexicon);
 	}
 	
-	@Test
+//	@Test
 	public void testMultipleSpecifics() {
 		// try to get word which is only in NIH lexicon
 		WordElement UK = lexicon.getWord("UK");
