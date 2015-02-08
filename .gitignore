@@ -2,3 +2,6 @@
 *.iml
 target
 lexicon/lexAccess2011lite/
+.classpath
+.project
+.settings
